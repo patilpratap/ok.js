@@ -7,7 +7,7 @@ var ok = (function () {
         });
         return trimmedArray;
     };
-    
+
     function splitArrayIntoArrays(arr) {
         var myjson = {
             'ids': [],
@@ -24,27 +24,31 @@ var ok = (function () {
         });
         return myjson;
     };
-    
+
     function idAndClasses(str) {
         return splitArrayIntoArrays(getIndetifiersFromString(str));
     };
-    
+
     function getElementsFromDocuments(document, str) {
         var myjson = idAndClasses(str);
         var elements = [];
         myjson.ids.forEach(myid => {
             var ele = document.getElementById(myid);
-            if (ele !== null) {
+            if (ele !== null)
                 elements.push(ele);
-            }
+
         });
         myjson.classes.forEach(myclass => {
             var eles = document.getElementsByClassName(myclass);
-            elements.push(eles);
+            if (eles !== null)
+                eles.forEach(ele => {
+                    if (ele !== null)
+                        elements.push(ele);
+                });
         });
         return elements;
     };
-    
+
     function applyOnElements(document, str, applyFunction, value) {
         getElementsFromDocuments(document, str).forEach(element => {
             applyFunction(element, value);
@@ -52,7 +56,7 @@ var ok = (function () {
     };
 
     return {
-        idAndClasses : idAndClasses,
-        applyOnElements : applyOnElements
+        idAndClasses: idAndClasses,
+        applyOnElements: applyOnElements
     };
 })();
